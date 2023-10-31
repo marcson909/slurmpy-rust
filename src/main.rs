@@ -5,18 +5,20 @@ use std::fs::File;
 use std::io::{self, BufRead, BufReader};
 use anyhow::{Context, Result};
 use clap::{Parser, Subcommand, Command};
-use cli::{Cli, CliArgs, Commands};
+
+mod config;
+mod cli;
+mod slurm;
+mod grepr_args;
+mod secdef_args;
+mod squeue_args;
+
+use cli::{Cli, CliOptions, Commands};
 use secdef_args::{SecDefArgs, SecDefCommand, SecDefSubCommands};
 use slurmpy_rust::print_command_str;
 use squeue_args::SqueueArgs;
 use grepr_args::GreprArgs;
-mod config;
-use crate::config::{DefaultConfig, MyConfig};
-mod slurm;
-mod cli;
-mod squeue_args;
-mod secdef_args;
-mod grepr_args;
+// use crate::config::{DefaultConfig, MyConfig};
 
 
 fn main() {
@@ -59,10 +61,14 @@ fn run (cli: Cli)  -> slurmpy_rust::DynResult<()>{
             match slurmpy_rust::open(&maybe_path) {
                 Err(e) => eprintln!("{}: {}", maybe_path, e),
                 Ok(content) => {
+                    let mut fallback_str = grepr_args.fallback_text.join(" ");
+                    if cli.options.upper {
+                        fallback_str = fallback_str.to_uppercase();
+                    }
                     slurmpy_rust::find_matches(
                         content,
                         &grepr_args.pattern,
-                        &grepr_args.fallback_text.join(" "),
+                        &fallback_str,
                         &mut std::io::stdout()
                     );
                 }

@@ -11,7 +11,7 @@ use crate::GreprArgs;
 pub struct Cli {
     /// cli arguments
     #[command(flatten)]
-    pub args: CliArgs,
+    pub options: CliOptions,
 
     #[command(subcommand)]
     pub command: Commands,
@@ -19,9 +19,10 @@ pub struct Cli {
 }
 
 #[derive(Args, Debug)]
-pub struct CliArgs {
+pub struct CliOptions {
+    /// Changes various strings (depending on the command) to uppercase to test various behavior
     #[arg(long)]
-    pub test_arg: bool,
+    pub upper: bool,
 }
 
 

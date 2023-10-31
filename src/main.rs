@@ -55,7 +55,7 @@ fn run (cli: Cli)  -> slurmpy_rust::DynResult<()>{
             let squeue_str = format!("{:?}",squeue_args.to_vec());
             // println!("{}", squeue_str)
             print_command_str(&mut std::io::stdout(), &squeue_str);
-        }
+        },
         Commands::Grepr(grepr_args) => {
             let maybe_path = grepr_args.path.to_string_lossy();
             match slurmpy_rust::open(&maybe_path) {

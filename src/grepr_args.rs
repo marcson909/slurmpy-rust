@@ -10,6 +10,5 @@ pub struct GreprArgs {
     /// The path to the file to read
     pub path: std::path::PathBuf,
     /// The text to show if no pattern was matched
-    #[arg(required(true))]
     pub fallback_text: Vec<String>,
 }

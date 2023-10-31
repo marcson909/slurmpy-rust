@@ -34,20 +34,19 @@ fn run (cli: Cli)  -> slurmpy_rust::DynResult<()>{
     // println!("{:#?}", cfg);
     match cli.command {
         Commands::Secdef(secdef_command) => {
-            let command_args = &secdef_command.args;
-            let mut commands = command_args.to_vec();
+            let mut args = secdef_command.args.to_vec();
             let subcommand = &secdef_command.command;
             match subcommand {
                 SecDefSubCommands::Normalize(normalize_args) => {
-                    commands.push("normalize".into());
+                    args.push("normalize".into());
                     if normalize_args.slurm {
-                        commands.push("--slurm".into());
+                        args.push("--slurm".into());
                     };
-                    commands.push(format!("--ntype {:?}", normalize_args.ntype));
+                    args.push(format!("--ntype {:?}", normalize_args.ntype));
                 }
             }
             println!("{:#?}", &secdef_command);
-            let secdef_str = &commands.join(" ");
+            let secdef_str = &args.join(" ");
             let command_str = format!("secdef {}", &secdef_str);
             print_command_str(&mut std::io::stdout(), &command_str);
         },

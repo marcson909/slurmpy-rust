@@ -40,7 +40,7 @@ fn run (cli: Cli)  -> slurmpy_rust::DynResult<()>{
             match subcommand {
                 SecDefSubCommands::Normalize(normalize_args) => {
                     commands.push("normalize".into());
-                    if true == normalize_args.slurm{
+                    if normalize_args.slurm {
                         commands.push("--slurm".into());
                     };
                     commands.push(format!("--ntype {:?}", normalize_args.ntype));

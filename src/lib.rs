@@ -80,7 +80,7 @@ pub fn find_matches(
     let mut has_match = false;
     for (line_num, line_result) in content.lines().enumerate() {
         let line = line_result?;
-        if line.contains(&pattern) {
+        if line.contains(pattern) {
             writeln!(writer,"{} {}", &line_num, line);
             has_match = true;
         }

@@ -3,14 +3,7 @@ use chrono::{NaiveDate, ParseError};
 use clap::{Args, Command, Subcommand, ValueEnum};
 use serde::Deserialize;
 
-fn parse_duration(arg: &str) -> Result<std::time::Duration, std::num::ParseIntError> {
-    let seconds = arg.parse()?;
-    Ok(std::time::Duration::from_secs(seconds))
-}
 
-fn parse_tradedate(arg: &str) -> Result<NaiveDate, ParseError> {
-    NaiveDate::parse_from_str(arg, "%Y%m%d")
-}
 #[derive(Args, Debug)]
 pub struct SecDefCommand {
     #[command(flatten)]
@@ -45,6 +38,10 @@ impl SecDefArgs {
         }
         args
     }
+}
+
+fn parse_tradedate(arg: &str) -> Result<NaiveDate, ParseError> {
+    NaiveDate::parse_from_str(arg, "%Y%m%d")
 }
 
 #[derive(Debug, Subcommand)]
